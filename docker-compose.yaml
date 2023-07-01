@@ -1,0 +1,10 @@
+services:
+  mongo:
+    image: mongo:4.4.22
+    ports:
+      - 27017:27017
+
+  # web:
+  #   build: .
+  #   ports:
+  #     - 3000:3000

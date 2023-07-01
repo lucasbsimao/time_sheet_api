@@ -1,20 +1,23 @@
 import { Post, Body, Param, Controller } from '@nestjs/common';
 
-import { Expediente } from '../domain/entities/expediente.entity';
-
-// import { ExpedienteService } from '../domain/services/expediente.service';
 import { CreateBatidaRequestDto } from './dto/create-batida-request.dto';
+import { CreateBatidaResponseDto } from './dto/create-batida-response.dto';
 
 import { ApiTags } from '@nestjs/swagger';
+import { ExpedienteService } from '../domain/services/expediente.service';
 
 @ApiTags('Expediente')
 @Controller()
 export class ExpedienteController {
 
-//   constructor(private readonly userService: ExpedienteService) {}
+  constructor(private readonly expedienteService: ExpedienteService) {}
 
   @Post('batidas')
-  async createBatida(@Body() createBatidaDto: CreateBatidaRequestDto): Promise<CreateBatidaRequestDto> {
-    return createBatidaDto;
+  async createBatida(@Body() createBatidaDto: CreateBatidaRequestDto): Promise<CreateBatidaResponseDto> {
+
+    const result = await this.expedienteService.create(createBatidaDto);
+
+
+    return new CreateBatidaResponseDto(result.dia, result.pontos);
   }
 }
