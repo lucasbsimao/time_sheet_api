@@ -12,7 +12,6 @@ export class ExpedienteRepository {
   async findByDia(dia: string): Promise<Expediente> {
     this.logger.log(`ExpedienteRepository::findByDia - Iniciando procura pelo dia ${dia}`)
 
-    
     try {
       const result = await this.expedienteModel.findOne({dia}).exec();
       return this.convertModelToEntity(result);
@@ -25,7 +24,6 @@ export class ExpedienteRepository {
   async upsert(expediente: Expediente): Promise<Expediente> {
     this.logger.log(`ExpedienteRepository::upsert - Iniciando upsert pelo expediente ${JSON.stringify(expediente)}`)
 
-    
     try {
       const result = await this.expedienteModel.findOneAndUpdate({dia: expediente.dia}, expediente, {upsert: true, new: true});
       

@@ -14,12 +14,9 @@ export class ExpedienteService {
     private expedienteRepository: ExpedienteRepository
   ) {}
 
-  private async findById(id : string): Promise<Expediente> {
-
-    return null;
-  }
-
   async create(createBatidaDto: CreateBatidaRequestDto): Promise<Expediente> {
+    this.logger.log(`ExpedienteService::create - Iniciando create pelo CreateBatidaRequestDto ${JSON.stringify(createBatidaDto)}`);
+
     let expediente = await this.expedienteRepository.findByDia(createBatidaDto.extractDia());
 
     try {
@@ -32,8 +29,11 @@ export class ExpedienteService {
       throw err;
     }
   
+    this.logger.debug(`ExpedienteService::create - expedienteRepository.upsert ${JSON.stringify(expediente)}`);
     const result = await this.expedienteRepository.upsert(expediente);
     
+
+    this.logger.verbose(`ExpedienteService::create - retornando objeto processado ${JSON.stringify(result)}`);
     return result;
   }
 }
