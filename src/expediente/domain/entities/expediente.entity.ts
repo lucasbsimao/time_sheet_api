@@ -9,12 +9,12 @@ import { ExpedienteException } from "src/expediente/common/ExpedienteException";
 export type ExpedienteDocument = HydratedDocument<Expediente>;
 
 @Schema()
-export class Expediente {
-    constructor(diaIso: string) {
-        this.addBatida(diaIso);
+export class Expediente{    
+    constructor(diaIso?: string) {
+        if(diaIso) this.addBatida(diaIso);
     }
     
-    @Prop()
+    @Prop({required: true, index: true})
     dia: string;
     
     @Prop()
@@ -29,7 +29,7 @@ export class Expediente {
             return;
 
         if(this.pontos?.includes(hora))
-            throw new ConflitoPontoException({mensagem: "Horário já registrado"})
+            throw new ConflitoPontoException({mensagem: "Horário já registrado"});
         
         this.dia = dia;
         

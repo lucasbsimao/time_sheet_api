@@ -1,6 +1,6 @@
 
 export class ConflitoPontoException extends Error{
-    constructor(desc: any) {
-        super(desc);
+    constructor(public desc: {mensagem: string}) {
+        super();
     }
 }

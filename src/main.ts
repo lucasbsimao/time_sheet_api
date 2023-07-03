@@ -8,7 +8,7 @@ async function bootstrap() {
   const appOptions = {cors: true};
   const app = await NestFactory.create(AppModule, appOptions);
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({transform: true}));
 
   const options = new DocumentBuilder()
     .setTitle('Timesheet app')
