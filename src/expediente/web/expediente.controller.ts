@@ -1,4 +1,4 @@
-import { Post, Body, Param, Controller, Logger } from '@nestjs/common';
+import { Post, Body, Controller, Logger } from '@nestjs/common';
 
 import { CreateBatidaRequestDto } from './dto/create-batida-request.dto';
 import { CreateBatidaResponseDto } from './dto/create-batida-response.dto';
@@ -16,7 +16,13 @@ export class ExpedienteController {
   @Post('batidas')
   async createBatida(@Body() createBatidaDto: CreateBatidaRequestDto): Promise<CreateBatidaResponseDto> {
 
+    this.logger.log(`ExpedienteController::createBatida - Início de processamento`);
+
+    const startTime = new Date();
     const result = await this.expedienteService.create(createBatidaDto);
+
+    const endTime = new Date()
+    this.logger.log(`ExpedienteController::createBatida - processo durou ${endTime.getMilliseconds() - startTime.getMilliseconds()} milisegundos`);
 
     return new CreateBatidaResponseDto(result.dia, result.pontos);
   }

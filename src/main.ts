@@ -8,12 +8,12 @@ async function bootstrap() {
   const appOptions = {cors: true};
   const app = await NestFactory.create(AppModule, appOptions);
 
+  app.setGlobalPrefix('v1');
   app.useGlobalPipes(new ValidationPipe({transform: true}));
 
   const options = new DocumentBuilder()
     .setTitle('Timesheet app')
     .setVersion('1.0')
-    .setBasePath('v1')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

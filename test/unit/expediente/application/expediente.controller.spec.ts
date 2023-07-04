@@ -19,7 +19,7 @@ describe('ExpedienteController', () => {
         providers: [
           {
             provide: ExpedienteService,
-            useValue: new ExpedienteService(null),
+            useValue: new ExpedienteService(null, null),
           },
         ],
       }).compile();

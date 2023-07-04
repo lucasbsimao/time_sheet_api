@@ -21,6 +21,19 @@ export class ExpedienteRepository {
     }
   }
 
+  async findByDias(dias: string[]): Promise<Expediente[]> {
+    this.logger.log(`ExpedienteRepository::findByDias - Iniciando procura por ${dias.length}`)
+
+    try {
+      const result = await this.expedienteModel.find({dia: {$in: dias }}).exec();
+
+      return result.map((expediente) => this.convertModelToEntity(expediente));
+    }catch (err) {
+      this.logger.error(`ExpedienteRepository::findByDias - Iniciando procura pelo dia ${dias}`)
+      throw err;
+    }
+  }
+
   async upsert(expediente: Expediente): Promise<Expediente> {
     this.logger.log(`ExpedienteRepository::upsert - Iniciando upsert pelo expediente ${JSON.stringify(expediente)}`)
 
