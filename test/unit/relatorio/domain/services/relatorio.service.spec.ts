@@ -5,6 +5,7 @@ import { Relatorio } from 'src/relatorio/domain/entities/relatorio.entity';
 import { ExpedienteService } from 'src/expediente/domain/services/expediente.service';
 import { NotAbleToComputeException } from 'src/relatorio/common/NotAbleToComputeException';
 import { NotFoundException } from '@nestjs/common';
+import { Expediente } from 'src/expediente/domain/entities/expediente.entity';
 
 describe('RelatorioService', () => {
   let relatorioRepository: RelatorioRepository;
@@ -117,8 +118,7 @@ describe('RelatorioService', () => {
 
       const expedientes = [{
         dia,
-        pontos: afterLunch,
-        addBatida: () => (null)
+        pontos: afterLunch
       }];
 
       const relatorio = new Relatorio();
@@ -128,7 +128,7 @@ describe('RelatorioService', () => {
       relatorio.mes = mes;
 
       jest.spyOn(relatorioRepository, 'findByMes').mockImplementation(async(value: any) => relatorio);
-      jest.spyOn(expedienteService, 'findByDias').mockImplementation(async() => expedientes);
+      jest.spyOn(expedienteService, 'findByDias').mockImplementation(async() => expedientes as Expediente[]);
 
       const result = await relatorioService.retrieve(mes);
 

@@ -1,4 +1,4 @@
-import { Post, Body, Param, Controller, Logger } from '@nestjs/common';
+import { Post, Body, Controller, Logger } from '@nestjs/common';
 
 import { CreateBatidaRequestDto } from './dto/create-batida-request.dto';
 import { CreateBatidaResponseDto } from './dto/create-batida-response.dto';
