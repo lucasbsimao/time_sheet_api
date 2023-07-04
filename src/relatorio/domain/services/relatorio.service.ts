@@ -43,9 +43,9 @@ export class RelatorioService {
     this.logger.verbose(`RelatorioService::retrieve - FolhasPontoResponseDto.Builder.build() ${JSON.stringify(relatorio)}`);
     
     return FolhasPontoResponseDto.Builder
-                  .withHorasDevidasFromNSeconds(relatorio.horasDevidas)
-                  .withHorasExcedentesFromNSeconds(relatorio.horasExcedentes)
-                  .withHorasTrabalhadasFromNSeconds(relatorio.horasTrabalhadas)
+                  .withHorasDevidasFromNSeconds(relatorio.horasDevidasInSeconds)
+                  .withHorasExcedentesFromNSeconds(relatorio.horasExcedentesInSeconds)
+                  .withHorasTrabalhadasFromNSeconds(relatorio.horasTrabalhadasInSeconds)
                   .withExpedientes(expedientes)
                   .withMes(mes)
                   .build();

@@ -10,15 +10,15 @@ export class Relatorio{
     @Prop({required: true, index: true})
     mes: string;
 
-    //Para mantermos a linguagem onipresente, mantemos o nome
+    //Para mantermos a linguagem onipresente, mantemos a parte principal dos campos em português e o restante de acordo com o código
     @Prop()
-    horasTrabalhadas: number = 0;
+    horasTrabalhadasInSeconds: number = 0;
 
     @Prop()
-    horasExcedentes: number  = 0;
+    horasExcedentesInSeconds: number  = 0;
 
     @Prop()
-    horasDevidas: number  = 0;
+    horasDevidasInSeconds: number  = 0;
     
     //Seguindo DDD, um agregado só deve fazer referencia ao domínio de outro através da chave do entidade raiz do agregado
     @Prop()
@@ -60,34 +60,34 @@ export class Relatorio{
     }
 
     private doRollbackOfPreviousComputation(duration: moment.Duration){
-        this.horasTrabalhadas -= duration.asSeconds();
+        this.horasTrabalhadasInSeconds -= duration.asSeconds();
 
         const partialDurationRate = duration.asSeconds()/this.getDaylyWorkingHoursInSeconds()
 
         if(partialDurationRate < 1){
-            this.horasDevidas -= this.getDaylyWorkingHoursInSeconds() - duration.asSeconds();
+            this.horasDevidasInSeconds -= this.getDaylyWorkingHoursInSeconds() - duration.asSeconds();
         } 
     }
 
     private calculateAttributes(horasTrabalhadasOfDay: number) {
         const completeDurationRate = horasTrabalhadasOfDay/this.getDaylyWorkingHoursInSeconds();
 
-        if(completeDurationRate < 1) this.horasDevidas += this.getDaylyWorkingHoursInSeconds() - horasTrabalhadasOfDay;
-        else this.horasExcedentes += horasTrabalhadasOfDay - this.getDaylyWorkingHoursInSeconds()
+        if(completeDurationRate < 1) this.horasDevidasInSeconds += this.getDaylyWorkingHoursInSeconds() - horasTrabalhadasOfDay;
+        else this.horasExcedentesInSeconds += horasTrabalhadasOfDay - this.getDaylyWorkingHoursInSeconds()
 
-        if(this.horasExcedentes > 0 && this.horasDevidas > 0) {
-            const diffHoras = this.horasExcedentes - this.horasDevidas;
+        if(this.horasExcedentesInSeconds > 0 && this.horasDevidasInSeconds > 0) {
+            const diffHoras = this.horasExcedentesInSeconds - this.horasDevidasInSeconds;
 
             if(diffHoras > 0) {
-                this.horasDevidas = 0
-                this.horasExcedentes = diffHoras;
+                this.horasDevidasInSeconds = 0
+                this.horasExcedentesInSeconds = diffHoras;
             } else {
-                this.horasExcedentes = 0;
-                this.horasDevidas = Math.abs(diffHoras)
+                this.horasExcedentesInSeconds = 0;
+                this.horasDevidasInSeconds = Math.abs(diffHoras)
             }
         }
 
-        this.horasTrabalhadas += horasTrabalhadasOfDay;
+        this.horasTrabalhadasInSeconds += horasTrabalhadasOfDay;
     }
 }
 
