@@ -43,9 +43,9 @@ export class RelatorioRepository {
     const relatorio = new Relatorio();
 
     relatorio.expedientes = data.expedientes;
-    relatorio.horasDevidas = data.horasDevidas;
-    relatorio.horasExcedentes = data.horasExcedentes;
-    relatorio.horasTrabalhadas = data.horasTrabalhadas;
+    relatorio.horasDevidasInSeconds = data.horasDevidasInSeconds;
+    relatorio.horasExcedentesInSeconds = data.horasExcedentesInSeconds;
+    relatorio.horasTrabalhadasInSeconds = data.horasTrabalhadasInSeconds;
     relatorio.mes = data.mes;
 
     return relatorio;

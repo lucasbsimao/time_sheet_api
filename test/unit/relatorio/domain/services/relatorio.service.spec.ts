@@ -54,9 +54,9 @@ describe('RelatorioService', () => {
       await relatorioService.addExpedienteToRelatorio(dia, pontos);
 
       expect(relatorio.expedientes).toStrictEqual(upsertedRelatorio.expedientes);
-      expect(relatorio.horasDevidas).toStrictEqual(upsertedRelatorio.horasDevidas);
-      expect(relatorio.horasExcedentes).toStrictEqual(upsertedRelatorio.horasExcedentes);
-      expect(relatorio.horasTrabalhadas).toStrictEqual(upsertedRelatorio.horasTrabalhadas);
+      expect(relatorio.horasDevidasInSeconds).toStrictEqual(upsertedRelatorio.horasDevidasInSeconds);
+      expect(relatorio.horasExcedentesInSeconds).toStrictEqual(upsertedRelatorio.horasExcedentesInSeconds);
+      expect(relatorio.horasTrabalhadasInSeconds).toStrictEqual(upsertedRelatorio.horasTrabalhadasInSeconds);
       expect(relatorio.mes).toStrictEqual(upsertedRelatorio.mes);
       expect(relatorioRepository.upsert).toBeCalledTimes(1);
       expect(relatorioRepository.findByMes).toBeCalledTimes(1);
@@ -87,9 +87,9 @@ describe('RelatorioService', () => {
       await relatorioService.addExpedienteToRelatorio(dia, afterLunch);
 
       expect(relatorio.expedientes).toStrictEqual(upsertedRelatorio.expedientes);
-      expect(relatorio.horasDevidas).toStrictEqual(upsertedRelatorio.horasDevidas);
-      expect(relatorio.horasExcedentes).toStrictEqual(upsertedRelatorio.horasExcedentes);
-      expect(relatorio.horasTrabalhadas).toStrictEqual(upsertedRelatorio.horasTrabalhadas);
+      expect(relatorio.horasDevidasInSeconds).toStrictEqual(upsertedRelatorio.horasDevidasInSeconds);
+      expect(relatorio.horasExcedentesInSeconds).toStrictEqual(upsertedRelatorio.horasExcedentesInSeconds);
+      expect(relatorio.horasTrabalhadasInSeconds).toStrictEqual(upsertedRelatorio.horasTrabalhadasInSeconds);
       expect(relatorio.mes).toStrictEqual(upsertedRelatorio.mes);
       expect(relatorioRepository.upsert).toBeCalledTimes(1);
       expect(relatorioRepository.findByMes).toBeCalledTimes(1);
@@ -133,9 +133,9 @@ describe('RelatorioService', () => {
       const result = await relatorioService.retrieve(mes);
 
       expect(relatorio.expedientes[0]).toStrictEqual(result.expedientes[0].dia);
-      expect(relatorio.horasDevidas).toStrictEqual(getHourInSeconds(4));
-      expect(relatorio.horasExcedentes).toStrictEqual(0);
-      expect(relatorio.horasTrabalhadas).toStrictEqual(getHourInSeconds(4));
+      expect(relatorio.horasDevidasInSeconds).toStrictEqual(getHourInSeconds(4));
+      expect(relatorio.horasExcedentesInSeconds).toStrictEqual(0);
+      expect(relatorio.horasTrabalhadasInSeconds).toStrictEqual(getHourInSeconds(4));
       expect(relatorio.mes).toStrictEqual(result.mes);
       expect(expedienteService.findByDias).toBeCalledTimes(1);
       expect(relatorioRepository.findByMes).toBeCalledTimes(1);
