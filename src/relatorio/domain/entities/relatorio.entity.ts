@@ -75,6 +75,18 @@ export class Relatorio{
         if(completeDurationRate < 1) this.horasDevidas += this.getDaylyWorkingHoursInSeconds() - horasTrabalhadasOfDay;
         else this.horasExcedentes += horasTrabalhadasOfDay - this.getDaylyWorkingHoursInSeconds()
 
+        if(this.horasExcedentes > 0 && this.horasDevidas > 0) {
+            const diffHoras = this.horasExcedentes - this.horasDevidas;
+
+            if(diffHoras > 0) {
+                this.horasDevidas = 0
+                this.horasExcedentes = diffHoras;
+            } else {
+                this.horasExcedentes = 0;
+                this.horasDevidas = Math.abs(diffHoras)
+            }
+        }
+
         this.horasTrabalhadas += horasTrabalhadasOfDay;
     }
 }
