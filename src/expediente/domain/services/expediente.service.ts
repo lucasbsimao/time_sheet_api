@@ -40,7 +40,7 @@ export class ExpedienteService {
     const result = await this.expedienteRepository.upsert(expediente);
 
     this.logger.debug(`ExpedienteService::create - relatorioService.addExpedienteToRelatorio ${expediente.dia} : ${JSON.stringify(expediente.pontos)}`);
-    if(expediente.pontos.length%2 === 0) this.relatorioService.addExpedienteToRelatorio(expediente.dia, expediente.pontos);
+    if(expediente.pontos.length%2 === 0) await this.relatorioService.addExpedienteToRelatorio(expediente.dia, expediente.pontos);
     
     this.logger.verbose(`ExpedienteService::create - retornando objeto processado ${JSON.stringify(result)}`);
     return result;

@@ -4,10 +4,12 @@ import { ExpedienteService } from 'src/expediente/domain/services/expediente.ser
 import { Expediente } from 'src/expediente/domain/entities/expediente.entity';
 import { ExpedienteRepository } from 'src/expediente/domain/repositories/expediente.repository';
 import { ConflictException } from '@nestjs/common';
+import { RelatorioService } from 'src/relatorio/domain/services/relatorio.service';
 
 describe('ExpedienteService', () => {
   let expedienteRepository: ExpedienteRepository;
   let expedienteService: ExpedienteService;
+  let relatorioService: RelatorioService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -17,10 +19,15 @@ describe('ExpedienteService', () => {
             provide: ExpedienteRepository,
             useValue: new ExpedienteRepository(null),
           },
+          {
+            provide: RelatorioService,
+            useValue: new RelatorioService(null, null),
+          }
         ],
       }).compile();
 
     expedienteService = moduleRef.get<ExpedienteService>(ExpedienteService);
+    relatorioService = moduleRef.get<RelatorioService>(RelatorioService);
     expedienteRepository = moduleRef.get<ExpedienteRepository>(ExpedienteRepository);
   });
 
@@ -56,10 +63,12 @@ describe('ExpedienteService', () => {
     
     jest.spyOn(expedienteRepository, 'findByDia').mockImplementation(async(value: any) => returnedExpediente);
     jest.spyOn(expedienteRepository, 'upsert').mockImplementation(async(value: any) => value);
+    jest.spyOn(relatorioService, 'addExpedienteToRelatorio').mockImplementation(async() => null);
 
     const result = await expedienteService.create(createBatidaRequestDto);
 
     expect(result).toEqual(expectedExpediente);
+    expect(relatorioService.addExpedienteToRelatorio).toBeCalled();
   });
 
   it('Deve lançar um erro do tipo ConflitoPontoException quando receber um CreateBatidaRequestDto válido mas que já esteja registrado no banco', async () => {

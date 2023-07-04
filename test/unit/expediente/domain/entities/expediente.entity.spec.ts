@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { ConflitoPontoException } from "src/expediente/common/ConflitoPontoException";
 import { ExpedienteException } from "src/expediente/common/ExpedienteException";
 import { Expediente } from "src/expediente/domain/entities/expediente.entity";
