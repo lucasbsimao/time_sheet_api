@@ -1,10 +1,12 @@
 services:
-  mongo:
+  database:
     image: mongo:4.4.22
+    container_name: database
     ports:
-      - 27017:27017
-
-  # web:
-  #   build: .
-  #   ports:
-  #     - 3000:3000
+      - '27017:27017'
+  web:
+    depends_on:
+      - database
+    build: .
+    ports:
+      - 3000:3000

@@ -2,7 +2,7 @@ import { Param, Controller, Logger, Get } from '@nestjs/common';
 
 import { FolhasPontoResponseDto } from './dto/folhas-de-ponto-response.dto';
 
-import { ApiTags } from '@nestjs/swagger';
+import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { RelatorioService } from '../domain/services/relatorio.service';
 
 @ApiTags('Relatorio')
@@ -13,6 +13,7 @@ export class RelatorioController {
   constructor(private readonly relatorioService: RelatorioService) {}
 
   @Get(':mes')
+  @ApiProperty({name:"mes", default: "2023-01"})
   async getFolhaDePonto(@Param('mes') mes: string): Promise<FolhasPontoResponseDto> {
 
     this.logger.log(`RelatorioController::createBatida - Início de processamento`);
